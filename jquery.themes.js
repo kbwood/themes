@@ -1,5 +1,5 @@
 /* http://keith-wood.name/themes.html
-   Applying CSS themes for jQuery v1.0.0.
+   Applying CSS themes for jQuery v1.1.0.
    Written by Keith Wood (kbwood@virginbroadband.com.au) September 2008.
    Dual licensed under the GPL (http://dev.jquery.com/browser/trunk/jquery/GPL-LICENSE.txt) and 
    MIT (http://dev.jquery.com/browser/trunk/jquery/MIT-LICENSE.txt) licenses. 
@@ -30,35 +30,47 @@ function Themes() {
 	this._settings = {
 		themes: [],  // List of theme IDs to use, empty for all
 		icons: 'themes.png', // Horizontal amalgamation of all theme icons
-		iconSize: [25, 22],  // The width and height of the individual icons
-		previews: 'themes_previews.png', // Horizontal amalgamation of all theme previews
-		previewSize: [105, 92],  // The width and height of the individual previews
+		iconSize: [23, 20],  // The width and height of the individual icons
+		previews: 'themes-preview.png', // Horizontal amalgamation of all theme previews
+		previewSize: [90, 80],  // The width and height of the individual previews
 		showPreview: true,  // True to display a popup preview, false to not show it
 		compact: true  // True if a compact presentation should be used, false for full
 	};
 	this._themes = {  // The definitions of the available themes
-		'blacktie': {display: 'Black Tie', icon: 1, preview: 1,
-			url: 'blacktie/jquery-ui-themeroller.css'},
-		'corpcool': {display: 'Corp Cool', icon: 5, preview: 5,
-			url: 'corpcool/jquery-ui-themeroller.css'},
-		'creamsicle': {display: 'Creamsicle', icon: 9, preview: 9,
-			url: 'creamsicle/jquery-ui-themeroller.css'},
-		'cupertino': {display: 'Cupertino', icon: 4, preview: 4,
-			url: 'cupertino/jquery-ui-themeroller.css'},
-		'dotluv': {display: 'Dot Luv', icon: 8, preview: 8,
-			url: 'dotluv/jquery-ui-themeroller.css'},
-		'dustyshelf': {display: 'Dusty Shelf', icon: 7, preview: 7,
-			url: 'dustyshelf/jquery-ui-themeroller.css'},
-		'excitebike': {display: 'Excite Bike', icon: 2, preview: 2,
-			url: 'excitebike/jquery-ui-themeroller.css'},
-		'mintchoc': {display: 'Mint Choc', icon: 6, preview: 6,
-			url: 'mintchoc/jquery-ui-themeroller.css'},
-		'smoothness': {display: 'Smoothness', icon: 0, preview: 0,
-			url: 'smoothness/jquery-ui-themeroller.css'},
-		'southstreet': {display: 'South Street', icon: 3, preview: 3,
-			url: 'southstreet/jquery-ui-themeroller.css'},
-		'uisite': {display: 'UI Site', icon: 10, preview: 10,
-			url: 'uisite/jquery-ui-themeroller.css'}
+		'blacktie': {display: 'Black Tie', icon: 0, preview: 0,
+			url: 'blacktie/ui.all.css'},
+		'blitzer': {display: 'Blitzer', icon: 1, preview: 1,
+			url: 'blitzer/ui.all.css'},
+		'cupertino': {display: 'Cupertino', icon: 2, preview: 2,
+			url: 'cupertino/ui.all.css'},
+		'dotluv': {display: 'Dot Luv', icon: 3, preview: 3,
+			url: 'dotluv/ui.all.css'},
+		'excitebike': {display: 'Excite Bike', icon: 4, preview: 4,
+			url: 'excitebike/ui.all.css'},
+		'hotsneaks': {display: 'Hot Sneaks', icon: 5, preview: 5,
+			url: 'hotsneaks/ui.all.css'},
+		'humanity': {display: 'Humanity', icon: 6, preview: 6,
+			url: 'humanity/ui.all.css'},
+		'mintchoc': {display: 'Mint Choc', icon: 7, preview: 7,
+			url: 'mintchoc/ui.all.css'},
+		'redmond': {display: 'Redmond', icon: 8, preview: 8,
+			url: 'redmond/ui.all.css'},
+		'smoothness': {display: 'Smoothness', icon: 9, preview: 9,
+			url: 'smoothness/ui.all.css'},
+		'southstreet': {display: 'South Street', icon: 10, preview: 10,
+			url: 'southstreet/ui.all.css'},
+		'start': {display: 'Start', icon: 11, preview: 11,
+			url: 'start/ui.all.css'},
+		'swankypurse': {display: 'Swanky Purse', icon: 12, preview: 12,
+			url: 'swankypurse/ui.all.css'},
+		'trontastic': {display: 'Trontastic', icon: 13, preview: 13,
+			url: 'trontastic/ui.all.css'},
+		'uidarkness': {display: 'UI Darkess', icon: 14, preview: 14,
+			url: 'uidarkness/ui.all.css'},
+		'uilightness': {display: 'UI Lightness', icon: 15, preview: 15,
+			url: 'uilightness/ui.all.css'},
+		'vader': {display: 'Vader', icon: 16, preview: 16,
+			url: 'vader/ui.all.css'}
 	};
 }
 
@@ -165,6 +177,9 @@ $.extend(Themes.prototype, {
 		var allThemes = this._themes;
 		$.each(themes, function(index, id) {
 			var theme = allThemes[id];
+			if (!theme) {
+				return;
+			}
 			html += '<li class="themes__' + id + ($.themes.currentTheme == id ? ' themes_current' : '') +
 				'"><a onclick="$.themes._setTheme(\'' + id + '\',\'' +
 				escape(theme.display) + '\',\'' + escape(settings.themeBase + theme.url) + '\')"' +
@@ -178,12 +193,12 @@ $.extend(Themes.prototype, {
 				if (typeof theme.icon == 'number') {
 					html += ' style="background: transparent url(' + settings.icons +
 						') no-repeat -' + (theme.icon * settings.iconSize[0]) + 'px 0px;' +
-						($.browser.mozilla && $.browser.version.substr(0, 3) != '1.9' ?
+						($.browser.mozilla && parseInt($.browser.version.substr(2), 10) < 9 ?
 						' padding-left: ' + settings.iconSize[0] + 'px;' +
 						' padding-bottom: ' + (settings.iconSize[1] - 16) + 'px;' : '') + '">';
 				}
 				else {
-					html += '><img src="' + theme.icon + '" style="align: top;"/>';
+					html += '><img src="' + theme.icon + '" alt="' + theme.display + '"/>';
 				}
 				html +=	'</span>' + (settings.compact ? '' : '&#xa0;');
 			}
@@ -210,9 +225,10 @@ $.extend(Themes.prototype, {
 	   @param  url      (string) the location of the CSS
 	   @param  loading  (boolean) true if initially loading */
 	_setTheme: function(id, display, url, loading) {
-		$('#' + $.themes._linkID).remove(); // Update styles
-		$('head').append('<link rel="stylesheet" type="text/css" href="' + url +
-			'" id="' + $.themes._linkID + '"/>');
+		if ($('#' + $.themes._linkID).length == 0) {
+			$('head').append('<link rel="stylesheet" type="text/css" id="' + $.themes._linkID + '"/>');
+		}
+		$('#' + $.themes._linkID).attr('href', url);
 		$.themes.currentTheme = id;
 		$('.' + $.themes.markerClassName + ' li').removeClass('themes_current');
 		$('.themes__' + id).addClass('themes_current');
@@ -258,7 +274,7 @@ $.extend(Themes.prototype, {
 		}
 		else {
 			$(id + ' div').hide();
-			html += '<img src="' + preview + '" style="align: top;"/>';
+			html += '<img src="' + preview + '" alt="' + display + '"/><br/>';
 		}
 		html += '<span>' + display + '</span>';
 		var parent = $(link).parent();
@@ -275,7 +291,7 @@ $.extend(Themes.prototype, {
 		var top = offset.top - absOffset.top + parent.height() +
 			parseInt(parent.css('padding-top') + 1);
 		$(id).children(':not(:first)').remove().end().
-			append(html).css('left', left).css('top', top).show();
+			append(html).css({left: left, top: top}).show();
 	},
 
 	/* Hide the theme preview.
