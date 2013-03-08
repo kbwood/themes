@@ -1,4 +1,4 @@
-/* jQuery Themes styles */
+/* jQuery Themes styles v1.3.0 */
 .themes_list {
 	list-style-type: none;
 	font-size: 80%;
@@ -54,6 +54,9 @@ li.themes_current {
 	border: 1px inset;
 	background: #fff;
 	text-align: center;
+}
+.themes_preview div {
+	margin: 0px auto;
 }
 .themes_preview img {
 	align: top;
